@@ -51,7 +51,11 @@ class Comments extends ActiveRecord
 
     public static function findComm()
     {
-        return self::find(['created_by'=>Yii::$app->user->id])->orderBy(['id'=>SORT_DESC])->all();
+        return self::find()->where(['created_by'=>Yii::$app->user->id, 'is_deleted'=>0])->orderBy(['id'=>SORT_DESC])->all();
+    }
+    public static function findCommById($id)
+    {
+        return self::find()->where(['id'=>$id])->orderBy(['id'=>SORT_DESC])->one();
     }
     /**
      * Gets query for [[CreatedBy]].

@@ -5,6 +5,7 @@
 
 /** @var app\models\ProfileForm $model */
 
+use app\models\Person;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -28,9 +29,9 @@ $this->title = 'Edit ProfileForm';
                 ]
             ]); ?>
 
-            <?= $form->field($model, 'name')->textInput(['value'=>Yii::$app->user->identity->getName()]) ?>
-            <?= $form->field($model, 'surname')->textInput(['value'=>Yii::$app->user->identity->getSurname()]) ?>
-            <?= $form->field($model, 'age')->textInput(['value'=>Yii::$app->user->identity->getAge()]) ?>
+            <?= $form->field($model, 'name')->textInput(['value'=>(Person::getPersonById(Yii::$app->user->id))->name]) ?>
+            <?= $form->field($model, 'surname')->textInput(['value'=>(Person::getPersonById(Yii::$app->user->id))->surname]) ?>
+            <?= $form->field($model, 'age')->textInput(['value'=>(Person::getPersonById(Yii::$app->user->id))->age]) ?>
             <?= $form->field($model, 'saveImage')->fileInput() ?>
 
 

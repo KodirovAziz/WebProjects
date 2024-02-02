@@ -34,18 +34,18 @@ class ProfileForm extends Model
     public function editProfile()
     {
 
-        $user = User::findOne(Yii::$app->user->id);
+        $person = Person::find()->where(['user_id'=>Yii::$app->user->id])->one();
         if($this->saveImage)
         {
         $path = $this->uploadPath() . Yii::$app->user->id . "." . $this->saveImage->extension;
         $this->saveImage->saveAs($path);
-        $user->picture = Yii::$app->user->id . "." . $this->saveImage->extension;
+        $person->picture = Yii::$app->user->id . "." . $this->saveImage->extension;
         }
-        $user->name = $this->name;
-        $user->surname = $this->surname;
-        $user->age = $this->age;
+        $person->name = $this->name;
+        $person->surname = $this->surname;
+        $person->age = $this->age;
 
-        if ($user->save()) {
+        if ($person->save()) {
             return true;
         }
         \Yii::error("User wasn't saved. " . VarDumper::dumpAsString($user->errors));

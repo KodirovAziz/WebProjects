@@ -54,22 +54,7 @@ public $accessToken;
     {
         return $this->authKey;
     }
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-    public function getAge()
-    {
-        return $this->age;
-    }
-    public function getImage()
-    {
-        return $this->picture;
-    }
+
 
     /**
      * {@inheritdoc}

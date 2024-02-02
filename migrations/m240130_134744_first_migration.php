@@ -14,22 +14,12 @@ class m240130_134744_first_migration extends Migration
     {
         $this->createTable('user',
         [
-            'id'=>$this->primaryKey(),
-            'username'=>$this->string()->notNull(),
-            'password'=>$this->string(),
-            'name'=>$this->string(),
-            'surname'=>$this->string(),
-            'age'=>$this->integer(),
-            'picture'=>$this->text()
+            'id' => $this->primaryKey(),
+            'username' => $this->string()->notNull(),
+            'password' => $this->string(),
+            'status' => $this->tinyInteger(1)->notNull()->defaultValue(1),
+            'is_deleted' => $this->tinyInteger(1)->notNull()->defaultValue(0),
         ]);
-
-        $this->createTable('comments', [
-            'id'=>$this->primaryKey(),
-            'content'=>$this->text(),
-            'created_by'=>$this->integer()
-        ]);
-
-        $this->addForeignKey('comment_user_created_by', 'comments', 'created_by', 'user','id');
 
     }
 
@@ -38,9 +28,7 @@ class m240130_134744_first_migration extends Migration
      */
     public function safeDown()
     {
-        echo "m240130_134744_first_migration cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('user');
     }
 
 }

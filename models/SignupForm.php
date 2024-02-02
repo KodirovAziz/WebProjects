@@ -23,11 +23,14 @@ public function rules()
 public function signup()
 {
     $user = new User();
+    $person = new Person();
     $user->username= $this->username;
     $user->password= \Yii::$app->security->generatePasswordHash($this->password);
+
     if($user->save())
     {
-        return true;
+        $person->user_id = $user->id;
+        if($person->save()) return true;
     }
     \Yii::error("User wasn't saved. ". VarDumper::dumpAsString($user->errors));
 }

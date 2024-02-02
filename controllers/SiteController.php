@@ -153,6 +153,22 @@ class SiteController extends Controller
         return $this->render('myProfile', ['model'=>$model]);
 
     }
+    public function actionComment($id)
+    {
+        $model = new CommentsForm();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->editComment($id);
+            return $this->redirect(Url::to('/site/profile'));
+        }
+        return $this->render('comment', ['model'=>$model]);
+    }
+    public function actionDelete($id)
+    {
+        $model = new CommentsForm();
+        $model->deleteComment($id);
+
+        return $this->redirect(Url::to('/site/profile'));
+    }
     public function actionEdit()
     {
         $model = new ProfileForm();
