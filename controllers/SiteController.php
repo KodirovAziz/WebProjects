@@ -4,6 +4,7 @@ namespace app\controllers;
 
 
 
+use app\models\Person;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -146,11 +147,12 @@ class SiteController extends Controller
     public function actionProfile()
     {
         $model = new CommentsForm();
+        $person = Person::getPersonById(Yii::$app->user->id);
         if ($model->load(Yii::$app->request->post())) {
             $model->postComment();
                 return $this->refresh();
         }
-        return $this->render('myProfile', ['model'=>$model]);
+        return $this->render('myProfile', ['model'=>$model, 'person'=>$person]);
 
     }
     public function actionComment($id)
@@ -171,7 +173,7 @@ class SiteController extends Controller
     }
     public function actionEdit()
     {
-        $model = new ProfileForm();
+        $model = Person::getPersonById(Yii::$app->user->id);
         if ($model->load(Yii::$app->request->post())) {
             $model->saveImage = UploadedFile::getInstance($model, 'saveImage');
                 if($model->editProfile())

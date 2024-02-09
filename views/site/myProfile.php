@@ -3,10 +3,12 @@
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 
-/** @var app\models\CommentsForm $model */
+/** @var app\models\ProfileForm $model */
+/** @var app\models\Person $person */
 
 use app\models\Comments;
 use app\models\Person;
+use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -20,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <?=  isset((Person::getPersonById(Yii::$app->user->id))->picture)? Html::img('@web/uploads/'.(Person::getPersonById(Yii::$app->user->id))->picture, ['alt' => 'pic not found','style' => 'width:150px;height: 150px']): Html::img('@web/uploads/guest.png', ['alt' => 'pic not found','style' => 'width:150px;height: 150px']) ?>
+                            <?=  isset($person->picture)? Html::img('@web/uploads/'.$person->picture, ['alt' => 'profile photo','style' => 'width:150px;height: 150px']): Html::img('@web/uploads/guest.png', ['alt' => 'pic not found','style' => 'width:150px;height: 150px']) ?>
                             <div class="mt-3">
                                 <p class="text-secondary mb-1">User name: </p>
-                                <h4><?=  ucfirst(Yii::$app->user->identity->username) ?></h4>
+                                <h4><?= ucfirst((User::findIdentity($person->user_id))->username) ?></h4>
                             </div>
                         </div>
                     </div>
@@ -37,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <h6 class="mb-0">Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <?=  isset((Person::getPersonById(Yii::$app->user->id))->name)?ucfirst((Person::getPersonById(Yii::$app->user->id))->name): "None" ?>
+                                <?= (isset($person->name) ? ucfirst($person->name): "None") ?>
                             </div>
                         </div>
                         <hr>
@@ -46,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <h6 class="mb-0">Surname</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <?=  isset((Person::getPersonById(Yii::$app->user->id))->surname)?ucfirst((Person::getPersonById(Yii::$app->user->id))->surname): "None" ?>
+                                <?=  isset($person->surname) ? ucfirst($person->surname): "None" ?>
                             </div>
                         </div>
                         <hr>
@@ -55,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <h6 class="mb-0">Age</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <?=  isset((Person::getPersonById(Yii::$app->user->id))->age)?(Person::getPersonById(Yii::$app->user->id))->age: "None" ?>
+                                <?=  isset($person->age)?($person)->age: "None" ?>
                             </div>
                         </div>
                         <hr>

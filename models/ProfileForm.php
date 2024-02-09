@@ -25,6 +25,7 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
+            [['age, name, surname'], 'required'],
             ['age', 'integer'],
             [['name', 'surname'], 'string'],
             ['saveImage', 'file', 'skipOnEmpty'=>true,'extensions' => 'png, jpg' ]
@@ -33,8 +34,8 @@ class ProfileForm extends Model
 
     public function editProfile()
     {
-
-        $person = Person::find()->where(['user_id'=>Yii::$app->user->id])->one();
+        if($this->validate())
+        {$person = Person::find()->where(['user_id'=>Yii::$app->user->id])->one();
         if($this->saveImage)
         {
         $path = $this->uploadPath() . Yii::$app->user->id . "." . $this->saveImage->extension;
@@ -47,7 +48,7 @@ class ProfileForm extends Model
 
         if ($person->save()) {
             return true;
-        }
+        }}
         \Yii::error("User wasn't saved. " . VarDumper::dumpAsString($user->errors));
 
         return true;
